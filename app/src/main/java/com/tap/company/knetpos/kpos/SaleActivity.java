@@ -20,7 +20,8 @@ import com.pax.unifiedsdk.message.SaleMsg;
 import com.pax.unifiedsdk.message.TransResponse;
 import com.pax.unifiedsdk.sdkconstants.SdkConstants;
 
-public class SaleActivity extends AppCompatActivity {
+public class
+SaleActivity extends AppCompatActivity {
     AppCompatEditText amountET;
     AppCompatEditText tipAmountET;
     Button startSaleBtn;
@@ -43,9 +44,11 @@ public class SaleActivity extends AppCompatActivity {
 
         //Create transaction API
         transAPI  = TransAPIFactory.createTransAPI();
-//Create request message which is a object
+
+        //Create request message which is a object
         SaleMsg.Request request = new SaleMsg.Request();
-//get the amount value from UI EditText
+
+        //get the amount value from UI EditText
 //and convert to long then pass to the sale message //@long
         request.setAmount(Long.parseLong(amountET.getText().toString()));
         request.setCurrencyCode("KWD");
