@@ -17,21 +17,21 @@
 
     <Button
         android:id="@+id/button1"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SALE"
         android:onClick="openSale"
         />
-
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="VOID"
-        android:visibility="gone"
-        android:layout_margin="30dp"
+        android:text="AUTHORIZE"
+        android:visibility="visible"
+        android:layout_margin="15dp"
+        android:onClick="openAuthorize"
         android:layout_gravity="center_horizontal"
 
         />
@@ -39,8 +39,62 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="VOID"
+        android:visibility="visible"
+        android:layout_margin="15dp"
+        android:layout_gravity="center_horizontal"
+
+        />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REFUND"
+        android:visibility="visible"
+        android:layout_margin="15dp"
+        android:layout_gravity="center_horizontal"
+
+        />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SETTLE"
+        android:visibility="visible"
+        android:layout_margin="15dp"
+        android:layout_gravity="center_horizontal"
+
+        />
+
+    <Button
+    android:id="@+id/button6"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="CASH BACK"
+    android:visibility="visible"
+    android:layout_margin="15dp"
+    android:layout_gravity="center_horizontal"
+
+    />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REVERSAL"
+        android:visibility="visible"
+        android:layout_margin="15dp"
+        android:layout_gravity="center_horizontal"
+
+        />
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Last Transaction"
-        android:layout_margin="30dp"
+        android:layout_margin="15dp"
         android:onClick="showLastTransaction"
         android:layout_gravity="center_horizontal"
         />

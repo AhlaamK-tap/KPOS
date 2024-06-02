@@ -4,70 +4,74 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.pax.unifiedsdk.factory.ITransAPI;
-import com.pax.unifiedsdk.factory.TransAPIFactory;
+import com.pax.unifiedsdk.message.AuthComMsg;
 import com.pax.unifiedsdk.message.BaseResponse;
 import com.pax.unifiedsdk.message.SaleMsg;
-import com.pax.unifiedsdk.message.TransResponse;
+import com.pax.unifiedsdk.message.VoidMsg;
 import com.pax.unifiedsdk.sdkconstants.SdkConstants;
 
-public class
-SaleActivity extends AppCompatActivity {
+import java.util.Objects;
+
+public class VoidActivity extends AppCompatActivity {
     AppCompatEditText amountET;
     AppCompatEditText tipAmountET;
     Button startSaleBtn;
     ITransAPI transAPI;
+    String transactionType;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sale);
+        setContentView(R.layout.activity_void);
         initVews();
+        transactionType =   Objects.requireNonNull(Objects.requireNonNull(getIntent().getExtras()).get("typeTransaction")).toString();
+
     }
 
-    private void initVews() {
+    private void initVews () {
         amountET = findViewById(R.id.amountEdit);
         tipAmountET = findViewById(R.id.tipAmountEdit);
         startSaleBtn = findViewById(R.id.btnStartSale);
 
+        if(transactionType.equals("VOID")){
+            tipAmountET.setVisibility(View.GONE);
+            amountET.setVisibility(View.GONE);
+        }
+
+    /*   startSaleBtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if(transactionType.equals("AUTH")){
+                   startAuth(v);
+               }else if(transactionType .equals("VOID")){
+
+               }
+
+           }
+       });*/
+
     }
 
-    public void startSale(View view) {
+
+
+    public void startVoid(View view) {
 
         //Create transaction API
         transAPI = new KPOSConnect().connectTransAPI();
         System.out.println("transAPI>>"+transAPI);
 
         //Create request message which is a object
-        SaleMsg.Request request = new SaleMsg.Request();
-
-        //get the amount value from UI EditText
-//and convert to long then pass to the sale message //@long
-        request.setAmount(Long.parseLong(amountET.getText().toString()));
-        request.setCurrencyCode("KWD");
-        if (!TextUtils.isEmpty(tipAmountET.getText().toString())) {
-//get the tip value from UI EditText
-//and convert to long then pass to the sale message //@long request.setTipAmount(Long.parseLong(tipAmount));
-        }
-//set transaction category/type
-        request.setTipAmount(Long.parseLong(tipAmountET.getText().toString()));
-        request.setCategory(SdkConstants.CATEGORY_SALE);
-
-     //   Bundle bundle = new Bundle();
-
-// storing the string value in the bundle
-// which is mapped to key
-       // bundle.putString("key1", "Sale Activity");
-       // request.setExtraBundle(bundle);
+        VoidMsg.Request request = new VoidMsg.Request();
+        request.setCategory(SdkConstants.CATEGORY_VOID);
 
 //Active sale transaction
         transAPI.startTrans(this, request);
@@ -77,9 +81,9 @@ SaleActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         BaseResponse baseResponse = transAPI.onResult(requestCode, resultCode, data);
-       // SaleMsg.Response transactionResponse =   (SaleMsg.Response ) baseResponse;
+        // SaleMsg.Response transactionResponse =   (SaleMsg.Response ) baseResponse;
 
-StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append('\n' + "transaction no : " +((SaleMsg.Response) baseResponse).getTransactionNo() +
                         '\n'+ "resg msg  : " + ((SaleMsg.Response) baseResponse).getRspMsg() +// important
                         '\n'+ "amount  : " + ((SaleMsg.Response) baseResponse).getAmount() +
@@ -113,11 +117,11 @@ StringBuilder sb = new StringBuilder();
                         '\n' + "Trade type : " +((SaleMsg.Response) baseResponse).getTradeType() +
                         '\n' + "transaction time : " +((SaleMsg.Response) baseResponse).getTransTime() +
                         '\n' + "transactionType : " +((SaleMsg.Response) baseResponse).getTransactionType() // important
-                      //  '\n' + "getTransRspMsg time : " + ((SaleMsg.Response) baseResponse).getTransRspMsg()
+                //  '\n' + "getTransRspMsg time : " + ((SaleMsg.Response) baseResponse).getTransRspMsg()
 
         );
 
-        Log.e("SAle Activity", sb.toString() );
+        Log.e("VOID Activity", sb.toString() );
 /*try {
 
     jsonObject.put("responseType", "PaymentResponse");

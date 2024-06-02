@@ -6,7 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.pax.unifiedsdk.factory.ITransAPI;
+import com.pax.unifiedsdk.factory.TransAPIFactory;
+
+import java.io.Serializable;
+
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,4 +31,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openAuthorize(View view) {
+
+        Intent intent = new Intent(getBaseContext(), AuthActivity.class);
+       intent.putExtra("typeTransaction","AUTH");
+        startActivity(intent);
+    }
+
+    public void openVoid(View view) {
+
+        Intent intent = new Intent(getBaseContext(), VoidActivity.class);
+       intent.putExtra("typeTransaction","VOID");
+        startActivity(intent);
+    }
 }

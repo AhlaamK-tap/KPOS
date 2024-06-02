@@ -25,7 +25,7 @@ public class LastTransactionActivity extends AppCompatActivity {
 
 GetLastTransMsg.Request  requestLast=  new GetLastTransMsg.Request();
 
-        transAPI  = TransAPIFactory.createTransAPI();
+        transAPI  = new KPOSConnect().connectTransAPI();
 
         transAPI.startTrans(this,requestLast);
     }
