@@ -44,4 +44,26 @@ public class MainActivity extends AppCompatActivity {
        intent.putExtra("typeTransaction","VOID");
         startActivity(intent);
     }
+    public void openRefund(View view) {
+        Intent intent = new Intent(getBaseContext(), VoidActivity.class);
+       intent.putExtra("typeTransaction","REFUND");
+        startActivity(intent);
+    }
+    public void openSettle(View view) {
+        Intent intent = new Intent(getBaseContext(), VoidActivity.class);
+       intent.putExtra("typeTransaction","SETTLE");
+        startActivity(intent);
+    }
+
+    public void openCashBack(View view) {
+        Intent intent = new Intent(getBaseContext(), VoidActivity.class);
+        intent.putExtra("typeTransaction","CASHBACK");
+        startActivity(intent);
+    }
+
+    public void openReversal(View view) {
+        Intent intent = new Intent(getBaseContext(), VoidActivity.class);
+        intent.putExtra("typeTransaction","REVERSAL");
+        startActivity(intent);
+    }
 }

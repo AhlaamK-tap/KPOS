@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +15,10 @@ import android.widget.Toast;
 import com.pax.unifiedsdk.factory.ITransAPI;
 import com.pax.unifiedsdk.message.AuthComMsg;
 import com.pax.unifiedsdk.message.BaseResponse;
+import com.pax.unifiedsdk.message.CashbackMsg;
+import com.pax.unifiedsdk.message.RefundMsg;
 import com.pax.unifiedsdk.message.SaleMsg;
+import com.pax.unifiedsdk.message.SettleMsg;
 import com.pax.unifiedsdk.message.VoidMsg;
 import com.pax.unifiedsdk.sdkconstants.SdkConstants;
 
@@ -42,22 +46,32 @@ public class VoidActivity extends AppCompatActivity {
         tipAmountET = findViewById(R.id.tipAmountEdit);
         startSaleBtn = findViewById(R.id.btnStartSale);
 
-        if(transactionType.equals("VOID")){
+        if(transactionType.equals("VOID") || transactionType.equals("SETTLE") ){
             tipAmountET.setVisibility(View.GONE);
             amountET.setVisibility(View.GONE);
+        }else if(transactionType.equals("REFUND")){
+            tipAmountET.setVisibility(View.GONE);
+
         }
 
-    /*   startSaleBtn.setOnClickListener(new View.OnClickListener() {
+       startSaleBtn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               if(transactionType.equals("AUTH")){
-                   startAuth(v);
-               }else if(transactionType .equals("VOID")){
-
-               }
+                if(transactionType .equals("VOID")){
+                    startVoid(v);
+               } else if (transactionType.equals("REFUND")) {
+                    startRefund(v);
+                }
+                else if (transactionType.equals("SETTLE")) {
+                    startSettle(v);
+                } else if (transactionType.equals("CASHBACK")) {
+                    startCashBack(v);
+                }else if (transactionType.equals("REVERSAL")) {
+                    startReversal(v); // TODO No method available
+                }
 
            }
-       });*/
+       });
 
     }
 
@@ -76,10 +90,94 @@ public class VoidActivity extends AppCompatActivity {
 //Active sale transaction
         transAPI.startTrans(this, request);
     }
+    public void startRefund(View view) {
 
+        //Create transaction API
+        transAPI = new KPOSConnect().connectTransAPI();
+        System.out.println("transAPI>>"+transAPI);
+
+        //Create request message which is a object
+        RefundMsg.Request request = new RefundMsg.Request();
+        request.setAmount(Long.parseLong(amountET.getText().toString()));
+        request.setCurrencyCode("KWD");
+
+        request.setCategory(SdkConstants.CATEGORY_REFUND);
+
+//Active sale transaction
+        transAPI.startTrans(this, request);
+    }
+
+    public void startSettle(View view) {
+
+        //Create transaction API
+        transAPI = new KPOSConnect().connectTransAPI();
+        System.out.println("transAPI>>"+transAPI);
+
+        //Create request message which is a object
+        SettleMsg.Request request = new SettleMsg.Request();
+
+        request.setCategory(SdkConstants.CATEGORY_SETTLE);
+
+//Active sale transaction
+        transAPI.startTrans(this, request);
+    }
+
+    public void startCashBack(View view) {
+
+        //Create transaction API
+        transAPI = new KPOSConnect().connectTransAPI();
+        System.out.println("transAPI>>"+transAPI);
+
+        //Create request message which is a object
+        CashbackMsg.Request request = new CashbackMsg.Request();
+        request.setAmount(Long.parseLong(amountET.getText().toString()));
+        request.setCurrencyCode("KWD");
+
+
+        request.setCategory(SdkConstants.CATEGORY_CASHBACK);
+
+//Active sale transaction
+        transAPI.startTrans(this, request);
+    }
+
+    public void startReversal(View view) {
+
+        //Create transaction API
+        transAPI = new KPOSConnect().connectTransAPI();
+        System.out.println("transAPI>>"+transAPI);
+
+        //Create request message which is a object
+        CashbackMsg.Request request = new CashbackMsg.Request();
+        request.setAmount(Long.parseLong(amountET.getText().toString()));
+        request.setCurrencyCode("KWD");
+
+
+        request.setCategory(SdkConstants.CATEGORY_CASHBACK);
+
+//Active sale transaction
+        transAPI.startTrans(this, request);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        switch(transactionType) {
+            case "VOID":
+                // code block
+                break;
+            case "AUTH":
+                // code block
+                break;
+
+                case "REFUND":
+                // code block
+                break;case "CASHBACK":
+                // code block
+                break;
+            default:
+                // code block
+        }
+
         BaseResponse baseResponse = transAPI.onResult(requestCode, resultCode, data);
         // SaleMsg.Response transactionResponse =   (SaleMsg.Response ) baseResponse;
 
