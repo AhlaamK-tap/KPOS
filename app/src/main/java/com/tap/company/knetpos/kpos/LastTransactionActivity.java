@@ -12,6 +12,7 @@ import com.pax.unifiedsdk.factory.ITransAPI;
 import com.pax.unifiedsdk.factory.TransAPIFactory;
 import com.pax.unifiedsdk.message.BaseResponse;
 import com.pax.unifiedsdk.message.GetLastTransMsg;
+import com.pax.unifiedsdk.message.RefundMsg;
 import com.pax.unifiedsdk.message.TransResponse;
 
 public class LastTransactionActivity extends AppCompatActivity {
@@ -38,7 +39,6 @@ GetLastTransMsg.Request  requestLast=  new GetLastTransMsg.Request();
 
         if (baseResponse instanceof GetLastTransMsg.Response){
                TransResponse transactionResponse =   (TransResponse ) baseResponse;
-
                StringBuilder sb = new StringBuilder();
             sb.append('\n' +transactionResponse.getTransactionNo() +
                     '\n' +transactionResponse.getRspMsg() +

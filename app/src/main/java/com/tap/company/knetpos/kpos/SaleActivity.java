@@ -81,7 +81,7 @@ SaleActivity extends AppCompatActivity {
 
 StringBuilder sb = new StringBuilder();
         sb.append('\n' + "transaction no : " +((SaleMsg.Response) baseResponse).getTransactionNo() +
-                        '\n'+ "resg msg  : " + ((SaleMsg.Response) baseResponse).getRspMsg() +// important
+                        '\n'+ "resp msg  : " + ((SaleMsg.Response) baseResponse).getRspMsg() +// important
                         '\n'+ "amount  : " + ((SaleMsg.Response) baseResponse).getAmount() +
                         '\n' + "acquirer name  : " +((SaleMsg.Response) baseResponse).getAcquirerName() +
                         '\n' + "cardNo : " +((SaleMsg.Response) baseResponse).getCardNo() +
